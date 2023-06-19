@@ -1,13 +1,26 @@
 import itertools
 import random
 
-items = [1,2,3]
+#this is the number of possible items - like...ben wants 60 here
+last_num = 5
+
+#below is a list of possible items:
+items = list(range(1,last_num+1))
+
+#this is the generator of combinations:
 combinations = (combination for combination in itertools.combinations(items, 2))
 
-#we need to draw the random numbers that will serve as indexes to be drawn from the generator.
+
+
+#we need to draw the random numbers that will serve as indexes to draw samples from the generator
+'''
+    Sample_size - how many numbers we want to draw from the generator above - for ben it would be 24
+    limit - the length of the generator - limit should be the length of the entire generator - might use numpy to get this number
+'''
+
 def random_numbers(sample_size, limit):
   counter_random = sample_size
-  random_set = []
+  random_set = []   #I know this is not a set but whatever
   while True:
     index = random.randint(0, limit)
     if index not in random_set:
@@ -17,24 +30,29 @@ def random_numbers(sample_size, limit):
          break
   random_set.sort()
   return random_set
-    
-print(random_numbers(3,5))
-    
+
+#test:
+print(random_numbers(4,9))
+
+#this is a function to get a certain index out of the generator:
+def extract_combination(generator, index):
+    for i, v in enumerate(generator):
+        if i is index:
+           return v
   
-'''    
-    samples.append(next(generator))
-    print(samples)
+my_indexes = [1,3,4,8] #call the random_numbers here instead
 
-'''
 
-'''
-print(random_sample(combinations,2))
 
-counter = 0
+my_counter = 0
+for number in my_indexes:
+   #reinitialize the generator so it does not loose items:
+   combinations2 = (combination for combination in itertools.combinations(items, 2))
+   print(extract_combination(combinations2,number))
+   my_counter +=1
+print(my_counter)
+
+
+      
 for number in combinations:
-  print(number)
-  counter += 1
-  if counter == 10:
-    break
-    print(number)
-'''
+   print(number)
